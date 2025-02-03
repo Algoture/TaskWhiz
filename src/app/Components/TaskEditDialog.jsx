@@ -25,7 +25,7 @@ export default function TaskEditDialog({ editingTask, onSave, onCancel }) {
     description: editingTask?.description || "",
     dueDate: editingTask?.dueDate ? editingTask.dueDate.split("T")[0] : "",
   });
-
+  const [loading, setLoading] = useState(false);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditValues((prev) => ({ ...prev, [name]: value }));
@@ -33,6 +33,7 @@ export default function TaskEditDialog({ editingTask, onSave, onCancel }) {
 
   const handleSave = () => {
     onSave(editValues);
+    setLoading(true);
   };
 
   return (
@@ -93,7 +94,7 @@ export default function TaskEditDialog({ editingTask, onSave, onCancel }) {
         </div>
         <DialogFooter>
           <Button onClick={handleSave} className="text-white">
-            <Loader2 className="animate-spin mr-2 h-4 w-4 hidden" />
+            {loading ? <Loader2 className="animate-spin" /> : "Update Task"}
           </Button>
           <Button variant="outline" onClick={onCancel}>
             Cancel
