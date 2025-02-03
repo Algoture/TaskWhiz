@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { useState } from "react";
-import { Calendar } from "lucide-react";
+import { Calendar, Loader2 } from "lucide-react";
 
 export default function TaskEditDialog({ editingTask, onSave, onCancel }) {
   const [editValues, setEditValues] = useState({
@@ -93,7 +93,7 @@ export default function TaskEditDialog({ editingTask, onSave, onCancel }) {
         </div>
         <DialogFooter>
           <Button onClick={handleSave} className="text-white">
-            Update Task
+            <Loader2 className="animate-spin mr-2 h-4 w-4 hidden" />
           </Button>
           <Button variant="outline" onClick={onCancel}>
             Cancel

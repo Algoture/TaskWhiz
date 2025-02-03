@@ -69,15 +69,19 @@ export default function TaskList() {
   return (
     <div className="space-y-4 max-w-lg mx-auto">
       <TaskForm onTaskAdded={handleTaskAdded} />
-      {tasks.map((task) => (
-        <TaskItem
-          key={task._id}
-          task={task}
-          onToggleComplete={handleToggleComplete}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
-      ))}
+      {tasks && tasks.length ? (
+        tasks.map((task) => (
+          <TaskItem
+            key={task._id}
+            task={task}
+            onDelete={handleDelete}
+            onToggleComplete={handleToggleComplete}
+            onEdit={handleEdit}
+          />
+        ))
+      ) : (
+        <p className="text-center">No tasks found</p>
+      )}
 
       {editingTask && (
         <TaskEditDialog
