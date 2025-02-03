@@ -1,8 +1,9 @@
 # TaskWhiz
+## -Yardstick's Full Stack Development assignment
 
 ## Overview
 
-This is a simple **Task Management Application** built using **Next.js** with **Server Actions**, **MongoDB** and **ShadCN UI**. It allows users to:
+**TaskWhiz** is a simple **Task Management Application** built using **Next.js** with **Server Actions**, **MongoDB** and **ShadCN UI**. It allows users to:
 
 ✅ **Create** tasks\
 ✅ **View** a list of tasks\
