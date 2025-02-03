@@ -46,7 +46,7 @@ export default function TaskForm({ onTaskAdded }) {
   };
 
   return (
-    <Card className="p-4 space-y-3 max-w-lg mx-auto shadow-md">
+    <Card className="p-4 space-y-3 max-w-lg mx-auto">
       <form onSubmit={handleSubmit} className="space-y-3">
         <Input
           type="text"
