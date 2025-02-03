@@ -27,7 +27,7 @@ export default function TaskForm({ onTaskAdded }) {
   const handleDateSelect = (selectedDate) => {
     if (selectedDate) {
       setDate(selectedDate);
-      handleInputChange("dueDate", selectedDate.toISOString().split("T")[0]);
+      handleInputChange("dueDate", selectedDate.toLocaleDateString("en-CA"));
     }
   };
 
@@ -67,7 +67,7 @@ export default function TaskForm({ onTaskAdded }) {
               className={`w-full justify-start text-left font-normal ${
                 !date && "text-muted-foreground"
               }`}>
-              <Calendar className="mr-2 h-4 w-4" />
+              <Calendar className="mr-2" />
               {date ? format(date, "PPP") : <span>Pick a due date</span>}
             </Button>
           </PopoverTrigger>
