@@ -83,9 +83,13 @@ The app will be available at **[http://localhost:3000](http://localhost:3000)**.
 ShadCN UI improves the user interface with:
 
 ✅ Button Components for Add, Edit, and Delete actions
+
 ✅ Modal/Dialog Components for editing tasks
+
 ✅ Card Components for displaying tasks in a clean layout
+
 ✅ Loading Spinners & Toasters for feedback and user interaction
+
 ---
 
 ## 🔧 Technologies Used
