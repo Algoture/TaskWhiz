@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a simple **Task Management Application** built using **Next.js** with **Server Actions** and **MongoDB**. It allows users to:
+This is a simple **Task Management Application** built using **Next.js** with **Server Actions**, **MongoDB** and **ShadCN UI**. It allows users to:
 
 ✅ **Create** tasks\
 ✅ **View** a list of tasks\
@@ -15,8 +15,8 @@ This is a simple **Task Management Application** built using **Next.js** with **
 - **Next.js 14** with App Router
 - **Server Actions** for database operations
 - **MongoDB** for persistent data storage
+- **ShadCN UI** for modern, accessible components
 - **Tailwind CSS** for styling
-- **Dynamic state updates** without page refresh
 - **Error handling & loading states**
 
 ---
@@ -71,12 +71,21 @@ The app will be available at **[http://localhost:3000](http://localhost:3000)**.
 
 ### **Edit a Task**
 
-- Click **Edit**, update the details, and save.
+- Click on **Edit** Icon, update the details, and save.
 
 ### **Delete a Task**
 
-- Click the **Delete** button to remove the task.
+- Click the **Delete** Icon to remove the task.
 
+---
+## UI Enhancements with ShadCN
+
+ShadCN UI improves the user interface with:
+
+✅ Button Components for Add, Edit, and Delete actions
+✅ Modal/Dialog Components for editing tasks
+✅ Card Components for displaying tasks in a clean layout
+✅ Loading Spinners & Toasters for feedback and user interaction
 ---
 
 ## 🔧 Technologies Used
@@ -84,7 +93,8 @@ The app will be available at **[http://localhost:3000](http://localhost:3000)**.
 - **Next.js 14** (Server Actions, App Router)
 - **MongoDB & Mongoose**
 - **Tailwind CSS** (UI Styling)
-- **React Hooks** (`useState`, `useEffect`)
+- **ShadCN UI** (Modern UI Components)
+
 
 ---
 
@@ -92,5 +102,3 @@ The app will be available at **[http://localhost:3000](http://localhost:3000)**.
 
 - ✅ Authentication (Login & Register)
 - ✅ User-specific task management
-- ✅ Drag-and-drop task reordering
-- ✅ Task priority levels
