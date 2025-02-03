@@ -21,7 +21,7 @@ export async function addTask(formData) {
   const newTask = new Task({
     title: formData.get("title"),
     description: formData.get("description"),
-    dueDate: formData.get("dueDate") ? new Date(formData.get("dueDate")) : null, // Ensure valid date
+    dueDate: formData.get("dueDate") ? new Date(formData.get("dueDate")) : null,
   });
   await newTask.save();
 }

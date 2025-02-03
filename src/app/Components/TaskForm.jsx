@@ -26,10 +26,15 @@ export default function TaskForm({ onTaskAdded }) {
 
   const handleDateSelect = (selectedDate) => {
     if (selectedDate) {
+      const localDate = new Date(
+        selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000
+      );
+      const formattedDate = localDate.toISOString().split("T")[0];
       setDate(selectedDate);
-      handleInputChange("dueDate", selectedDate.toLocaleDateString("en-CA"));
+      handleInputChange("dueDate", formattedDate);
     }
   };
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
