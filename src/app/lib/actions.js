@@ -26,14 +26,9 @@ export async function addTask(formData) {
   await newTask.save();
 }
 
-export async function updateTask(id, formData) {
+export async function updateTask(id, updatedData) {
   await connectDB();
-  await Task.findByIdAndUpdate(id, {
-    title: formData.get("title"),
-    description: formData.get("description"),
-    dueDate: formData.get("dueDate") ? new Date(formData.get("dueDate")) : null, // Ensure valid date
-    completed: formData.get("completed") === "true",
-  });
+  await Task.findByIdAndUpdate(id, updatedData, { new: true });
 }
 
 export async function deleteTask(id) {
