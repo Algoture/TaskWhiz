@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Calendar } from "lucide-react";
+import { Calendar, Loader2 } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -14,8 +14,10 @@ import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { useState } from "react";
 import { addTask, getTasks } from "@/app/lib/actions";
+import { set } from "mongoose";
 
 export default function TaskForm({ onTaskAdded }) {
+  const [loading, setLoading] = useState(false);
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
@@ -39,6 +41,7 @@ export default function TaskForm({ onTaskAdded }) {
 
     setNewTask({ title: "", description: "", dueDate: "" });
     setDate(null);
+    setLoading(false);
   };
 
   return (
@@ -86,8 +89,11 @@ export default function TaskForm({ onTaskAdded }) {
           </PopoverContent>
         </Popover>
 
-        <Button type="submit" className="w-full">
-          Add Task
+        <Button
+          type="submit"
+          className="w-full"
+          onClick={() => setLoading(true)}>
+          {loading ? <Loader2 className="h-4 w-4" /> : "Add Task"}
         </Button>
       </form>
     </Card>
