@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CheckCircle, Trash2 } from "lucide-react";
 import { getTasks, deleteTask, updateTask } from "@/app/lib/actions";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import TaskForm from "./TaskForm";
 import { toast } from "sonner";
+import TaskEditDialog from "./TaskEditDialog";
+import TaskItem from "./TaskItem";
 
 export default function TaskList() {
   const [tasks, setTasks] = useState([]);
+  const [editingTask, setEditingTask] = useState(null);
 
   useEffect(() => {
     async function fetchTasks() {
@@ -25,64 +25,67 @@ export default function TaskList() {
   };
 
   const handleDelete = async (id) => {
-    await deleteTask(id);
-    toast.success("Task deleted successfully");
-    setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
+    try {
+      await deleteTask(id);
+      setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
+      toast.success("Task deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete task");
+    }
   };
 
   const handleToggleComplete = async (task) => {
     const updatedTask = { ...task, completed: !task.completed };
-    await updateTask(task._id, {
-      title: task.title,
-      description: task.description,
-      dueDate: task.dueDate,
-      completed: updatedTask.completed,
-    });
-    setTasks((prevTasks) =>
-      prevTasks.map((t) => (t._id === task._id ? updatedTask : t))
-    );
-    toast.success("Task updated successfully");
+    try {
+      await updateTask(task._id, updatedTask);
+      setTasks((prevTasks) =>
+        prevTasks.map((t) => (t._id === task._id ? updatedTask : t))
+      );
+      toast.success("Task updated successfully");
+    } catch (error) {
+      toast.error("Failed to update task");
+    }
+  };
+
+  const handleEdit = (task) => {
+    setEditingTask(task);
+  };
+
+  const handleSaveEdit = async (editValues) => {
+    try {
+      await updateTask(editingTask._id, { ...editingTask, ...editValues });
+      setTasks((prevTasks) =>
+        prevTasks.map((t) =>
+          t._id === editingTask._id ? { ...t, ...editValues } : t
+        )
+      );
+      setEditingTask(null);
+      toast.success("Task updated successfully");
+    } catch (error) {
+      toast.error("Failed to update task");
+    }
   };
 
   return (
     <div className="space-y-4 max-w-lg mx-auto">
       <TaskForm onTaskAdded={handleTaskAdded} />
       {tasks.map((task) => (
-        <Card
+        <TaskItem
           key={task._id}
-          className="p-4 flex justify-between items-center border border-muted rounded-lg shadow-md bg-white">
-          <div className="flex items-center space-x-3">
-            <CheckCircle
-              className={`w-6 h-6 cursor-pointer transition-all ${
-                task.completed ? "text-green-500" : "text-gray-400"
-              }`}
-              onClick={() => handleToggleComplete(task)}
-            />
-            <div>
-              <h2
-                className={`text-lg font-semibold ${
-                  task.completed
-                    ? "line-through text-gray-400"
-                    : "text-gray-900"
-                }`}>
-                {task.title}
-              </h2>
-              {task.description && (
-                <p className="text-gray-600 text-sm">{task.description}</p>
-              )}
-              <p className="text-xs text-gray-500">
-                Due: {new Date(task.dueDate).toDateString()}
-              </p>
-            </div>
-          </div>
-          <Button
-            variant="link"
-            className="text-red-500 hover:text-red-600 transition"
-            onClick={() => handleDelete(task._id)}>
-            <Trash2 className="w-5 h-5" />
-          </Button>
-        </Card>
+          task={task}
+          onToggleComplete={handleToggleComplete}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
       ))}
+
+      {editingTask && (
+        <TaskEditDialog
+          editingTask={editingTask}
+          onSave={handleSaveEdit}
+          onCancel={() => setEditingTask(null)}
+        />
+      )}
     </div>
   );
 }

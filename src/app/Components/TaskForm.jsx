@@ -48,6 +48,7 @@ export default function TaskForm({ onTaskAdded }) {
           type="text"
           placeholder="Title"
           value={newTask.title}
+          className="focus:border-none"
           onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
           required
         />
