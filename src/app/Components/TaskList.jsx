@@ -3,7 +3,10 @@
 import { useState, useEffect } from "react";
 import { CheckCircle, Trash2 } from "lucide-react";
 import { getTasks, deleteTask, updateTask } from "@/app/lib/actions";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import TaskForm from "./TaskForm";
+import { toast } from "sonner";
 
 export default function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -18,35 +21,36 @@ export default function TaskList() {
 
   const handleTaskAdded = (updatedTasks) => {
     setTasks(updatedTasks);
+    toast.success("Task added successfully");
   };
 
   const handleDelete = async (id) => {
     await deleteTask(id);
+    toast.success("Task deleted successfully");
     setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
   };
 
   const handleToggleComplete = async (task) => {
     const updatedTask = { ...task, completed: !task.completed };
-
     await updateTask(task._id, {
       title: task.title,
       description: task.description,
       dueDate: task.dueDate,
       completed: updatedTask.completed,
     });
-
     setTasks((prevTasks) =>
       prevTasks.map((t) => (t._id === task._id ? updatedTask : t))
     );
+    toast.success("Task updated successfully");
   };
 
   return (
     <div className="space-y-4 max-w-lg mx-auto">
       <TaskForm onTaskAdded={handleTaskAdded} />
       {tasks.map((task) => (
-        <div
+        <Card
           key={task._id}
-          className="p-4 flex justify-between items-center border border-gray-200 rounded-lg shadow-md bg-white">
+          className="p-4 flex justify-between items-center border border-muted rounded-lg shadow-md bg-white">
           <div className="flex items-center space-x-3">
             <CheckCircle
               className={`w-6 h-6 cursor-pointer transition-all ${
@@ -71,11 +75,13 @@ export default function TaskList() {
               </p>
             </div>
           </div>
-          <Trash2
-            className="w-5 h-5 text-red-500 cursor-pointer hover:text-red-600 transition"
-            onClick={() => handleDelete(task._id)}
-          />
-        </div>
+          <Button
+            variant="link"
+            className="text-red-500 hover:text-red-600 transition"
+            onClick={() => handleDelete(task._id)}>
+            <Trash2 className="w-5 h-5" />
+          </Button>
+        </Card>
       ))}
     </div>
   );
